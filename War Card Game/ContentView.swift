@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var playerCard = "card7"
+    @State var cpuCard = "card13"
+    
+    @State var playerScore = 0
+    @State var cpuScore = 0
+    
     var body: some View {
         ZStack{
             Image("background-plain")
@@ -20,11 +26,16 @@ struct ContentView: View {
                 Spacer()
                 
                 HStack{
-                    Image("card2")
-                    Image("card3")
+                    Image(playerCard)
+                    Image(cpuCard)
                 }
                 Spacer()
-                Image("button")
+                Button(action: {
+                    deal()
+                }, label: {
+                    Image("button")
+                })
+                
                 Spacer()
                 HStack{
                     Spacer()
@@ -32,7 +43,7 @@ struct ContentView: View {
                         Text("Player")
                             .font(.headline)
                             .padding(.bottom, 10.0)
-                        Text("0")
+                        Text(String(playerScore))
                             .font(.largeTitle)
                             .padding(.bottom, 10.0)
 
@@ -42,7 +53,7 @@ struct ContentView: View {
                         Text("CPU")
                             .font(.headline)
                             .padding(.bottom, 10.0)
-                        Text("0")
+                        Text(String(cpuScore))
                             .font(.largeTitle)
                             .padding(.bottom, 10.0)
                     }
@@ -51,6 +62,20 @@ struct ContentView: View {
                 .foregroundColor(.white)
                 Spacer()
             }
+        }
+    }
+    
+    func deal(){
+        var playCardValue = Int.random(in: 2...14)
+        var cpuCardValue = Int.random(in: 2...14)
+        playerCard = "card" + String(playCardValue)
+        cpuCard = "card" + String(cpuCardValue)
+        
+        if playCardValue > cpuCardValue {
+            playerScore += 1
+        }
+        else {
+            cpuScore += 1
         }
     }
 }
